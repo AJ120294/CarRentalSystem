@@ -1,0 +1,20 @@
+@startuml use_case_diagram
+actor Customer
+actor Admin
+
+Customer --> (Register)
+Customer --> (Login)
+Customer --> (View Available Cars)
+Customer --> (Book a Car)
+
+Admin --> (Register)
+Admin --> (Login)
+Admin --> (Manage Car Inventory)
+Admin --> (Manage Bookings)
+
+note right of (Book a Car)
+  - Check availability
+  - Validate rental period
+  - Calculate rental fee
+end note
+@enduml

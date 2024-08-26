@@ -1,0 +1,27 @@
+@startuml admin_sequence_diagram
+actor Admin
+participant CarRentalSystem
+participant CarDatabase
+participant Car
+
+Admin -> CarRentalSystem: login_user(username, password)
+CarRentalSystem -> Admin: Authentication result
+
+Admin -> CarRentalSystem: add_car(car_details)
+CarRentalSystem -> CarDatabase: add_car(car)
+CarDatabase -> Car: Add car to database
+CarDatabase --> CarRentalSystem: Confirmation
+
+Admin -> CarRentalSystem: update_car(car_id, new_details)
+CarRentalSystem -> CarDatabase: update_car(car_id, new_details)
+CarDatabase -> Car: Update car details in database
+CarDatabase --> CarRentalSystem: Confirmation
+
+Admin -> CarRentalSystem: delete_car(car_id)
+CarRentalSystem -> CarDatabase: delete_car(car_id)
+CarDatabase -> Car: Remove car from database
+CarDatabase --> CarRentalSystem: Confirmation
+
+Admin -> CarRentalSystem: manage_bookings(booking_id, action)
+CarRentalSystem --> Admin: Confirmation
+@enduml

@@ -1,0 +1,60 @@
+@startuml class_diagram
+class User {
+  +user_id: int
+  +username: str
+  +password: str
+}
+
+class Customer {
+}
+
+class Admin {
+}
+
+class UserFactory {
+  +create_user(role: str, username: str, password: str): User
+}
+
+class Car {
+  +car_id: int
+  +make: str
+  +model: str
+  +year: int
+  +mileage: int
+  +available: bool
+  +min_rent_period: int
+  +max_rent_period: int
+}
+
+class CarDatabase {
+  -_instance: CarDatabase
+  -conn: mysql.connector.connection.MySQLConnection
+  -cursor: mysql.connector.cursor.MySQLCursor
+  +add_car(car: Car): void
+  +update_car(car_id: int, **kwargs): void
+  +delete_car(car_id: int): void
+  +get_available_cars(): list
+  +__del__(): void
+}
+
+class CarRentalSystem {
+  -users: dict
+  -car_database: CarDatabase
+  +register_user(role: str, username: str, password: str): void
+  +login_user(username: str, password: str): User
+  +view_available_cars(): list
+  +book_car(username: str, car_id: int, start_date: date, end_date: date): float
+  +calculate_rental_fee(car: Car, rental_duration: int): float
+  +save_booking(user_id: int, car_id: int, start_date: date, end_date: date, rental_fee: float): int
+  +manage_bookings(admin_username: str, booking_action: str, booking_id: int): void
+}
+
+User <|-- Customer
+User <|-- Admin
+UserFactory ..> Customer
+UserFactory ..> Admin
+CarRentalSystem o-- CarDatabase
+CarRentalSystem ..> User
+CarRentalSystem ..> Car
+CarDatabase o-- Car
+@enduml

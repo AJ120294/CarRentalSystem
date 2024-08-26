@@ -1,0 +1,15 @@
+@startuml sequence_diagram_customer
+actor Customer
+participant CarRentalSystem
+participant CarDatabase
+participant Car
+
+Customer -> CarRentalSystem: book_car(username, car_id, start_date, end_date)
+CarRentalSystem -> CarDatabase: get_available_cars()
+CarDatabase -> Car: retrieve car details
+CarDatabase --> CarRentalSystem: car details
+CarRentalSystem -> Customer: calculate_rental_fee()
+CarRentalSystem -> Car: mark as unavailable
+CarRentalSystem -> CarDatabase: save_booking()
+CarRentalSystem --> Customer: booking confirmation
+@enduml
